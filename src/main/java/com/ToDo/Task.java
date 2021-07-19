@@ -14,12 +14,14 @@ public class Task {
         this.isModified = isModified;
     }
 
+    public Task(){}
+
     public boolean isModified() {
         return isModified;
     }
 
-    public void setModified() {
-        isModified = true;
+    public void setModified(boolean isTaskModified) {
+        isModified = isTaskModified;
     }
 
     public String getTitle() {
@@ -48,7 +50,7 @@ public class Task {
 
     public void completeTask() {
         setCompleted();
-        setModified();
+        setModified(true);
     }
 
     public void setUnCompleted() {
@@ -66,6 +68,7 @@ public class Task {
     public void printTaskDetails() {
         System.out.println(
             "com.ToDo.Task Details: \n" +
+            "com.ToDo.Task ID: " + getId() + ",\n" +
             "com.ToDo.Task Title: " + getTitle() + ",\n" +
             "com.ToDo.Task Description: " + getDescription() + ",\n" +
             "Is com.ToDo.Task Completed: " + isCompleted() + ",\n" +

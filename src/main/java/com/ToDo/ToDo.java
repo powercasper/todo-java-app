@@ -2,6 +2,7 @@ package com.ToDo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ToDo {
     private static final List<Task> toDoList = new ArrayList<>();
@@ -64,7 +65,7 @@ public class ToDo {
         for (Task task: allTasks) {
             if(taskId == task.getId()) {
                 task.setUnCompleted();
-                task.setModified();
+                task.setModified(true);
             }
         }
     }
@@ -154,5 +155,70 @@ public class ToDo {
         System.out.println("task 2 should be completed: Received " + taskTwo.isCompleted());
         unCompleteTaskById(2);
         System.out.println("task 2 should not be completed: Received " + taskTwo.isCompleted());
+        taskTwo.completeTask();
+
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Do you want to add task? ");
+        String addTask = scanner.nextLine();
+        System.out.println("Do you want to add task? " + addTask);
+        if(addTask.equals("yes")) {
+            Task taskToAdd = new Task();
+            System.out.println("Enter Task Title: ");
+            String taskTitle = scanner.nextLine();
+            taskToAdd.setTitle(taskTitle);
+
+            System.out.println("Enter Task Description: ");
+            String taskDescription = scanner.nextLine();
+            taskToAdd.setDescription(taskDescription);
+
+            System.out.println("Enter if task is completed: yes or no");
+            String taskIsComplete = scanner.nextLine();
+            if(taskIsComplete.equals("yes")) {
+                taskToAdd.setCompleted();
+            } else {
+                taskToAdd.setUnCompleted();
+            }
+            taskToAdd.setModified(false);
+
+            addToDoList(taskToAdd);
+            System.out.println("TASK ADDED");
+            taskToAdd.printTaskDetails();
+        }
+
+        System.out.println("Do you want to see all completed TASKS? yes/no");
+        String seeCompletedTasks = scanner.nextLine();
+        if(seeCompletedTasks.equals("yes")) {
+            for (Task completedTask : getCompletedTasks()) {
+                completedTask.printTaskDetails();
+            }
+        }
+
+        System.out.println("Do you want to see all Not completed TASKS? yes/no");
+        String seeNotCompletedTasks = scanner.nextLine();
+        if(seeNotCompletedTasks.equals("yes")) {
+            for (Task unCompletedTask : getUnCompletedTasks()) {
+                unCompletedTask.printTaskDetails();
+            }
+        }
+
+        System.out.println("Do you want to uncomplete task?: ");
+        String uncompleteTask = scanner.nextLine();
+        if(uncompleteTask.equals("yes")) {
+            System.out.println("tasks that can be uncompletd: ");
+            List<Integer> listOfTask = new ArrayList<>();
+            for (Task completedTask : getCompletedTasks()) {
+                int taskId = completedTask.getId();
+                listOfTask.add(taskId);
+                System.out.println("tasks id: " + taskId);
+            }
+            System.out.println("Provide id of the task you want to uncomplete: ");
+            int taskIdToUncomplete = scanner.nextInt();
+            if(listOfTask.contains(taskIdToUncomplete)) {
+                unCompleteTaskById(taskIdToUncomplete);
+                System.out.println("TASK WITH ID: " + taskIdToUncomplete + " Uncompleted");
+            }
+        }
     }
 }
