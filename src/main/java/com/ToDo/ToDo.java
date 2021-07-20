@@ -110,12 +110,6 @@ public class ToDo {
 
     public static void addTask(Scanner scanner) {
         Task taskToAdd = new Task();
-        // workaround: need it because program is skipping first taskToAdd.setTitle(taskTitle); call.
-        // not sure how to fix it.
-        String taskTitle = scanner.nextLine();
-        System.out.println("");
-        taskToAdd.setTitle(taskTitle);
-        //
 
         System.out.println("Enter Task Title: ");
         String taskTitleSet = scanner.nextLine();
@@ -184,6 +178,7 @@ public class ToDo {
             // statements
             callMenu();
             selectedNumber = scanner.nextInt();
+            scanner.nextLine();
             switch (selectedNumber) {
                 case 1:
                     addTask(scanner);
